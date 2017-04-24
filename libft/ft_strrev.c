@@ -1,19 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strrev.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: kialvare <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/22 20:40:32 by phoreau           #+#    #+#             */
-/*   Updated: 2017/04/22 20:40:40 by phoreau          ###   ########.fr       */
+/*   Created: 2016/10/26 12:15:18 by kialvare          #+#    #+#             */
+/*   Updated: 2016/10/26 12:15:23 by kialvare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include "libft/libft.h"
+#include "libft.h"
 
-int		get_next_line(const int fd, char **line);
+char	*ft_strrev(char *str)
+{
+	char	t;
+	int		i;
+	int		n;
 
-#endif
+	i = 0;
+	n = 0;
+	while (str[n])
+		n++;
+	n--;
+	while (i < n)
+	{
+		t = str[n];
+		str[n] = str[i];
+		str[i] = t;
+		i++;
+		n--;
+	}
+	return (str);
+}
