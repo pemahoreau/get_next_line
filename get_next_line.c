@@ -55,24 +55,19 @@ static int		read_file(const int fd, char **line)
 		free(saved);
 		saved = tmp;
 	}
-	free(buf);
-	return (result);
+	return (0);
 }
 
 int				get_next_line(const int fd, char **line)
 {
 	int 			result;
-	static char		*saved = NULL;
-	char			*end_of_line;
+	static char		*saved;
+//	char			*end_of_line;
 
 	if (saved == NULL || fd < 0)
 		return (-1);
-	end_of_line = ft_strchr(saved, '\n');
-	while (end_of_line == NULL)
-	{
-		result = read_file(fd, &saved);
-
-	}
-	*line = NULL;
+	//end_of_line = ft_strchr(saved, '\n');
+	result = read_file(fd, &saved);
+	*line = saved;
 	return (1);
 }
