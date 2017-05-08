@@ -44,7 +44,8 @@ static int		read_file(const int fd, char **line)
 
 	if (!saved)
 		saved = ft_strdup("");
-		// saved = malloc(sizeof(*saved) * (BUFF_SIZE));
+	//because malloc allows us to modify
+	//if the str is on the stack we can't modify it/it will have strange behavr
 	while ((return_of_read = read(fd, buf, BUFF_SIZE)))
 	{
 		if (!line || fd < 0 || read(fd, buf, 0) < 0)
@@ -68,11 +69,13 @@ int				get_next_line(const int fd, char **line)
 
 	if (fd < 0)
 		return (-1);
-	// end_of_line = ft_strchr(saved, '\n');
+	//end_of_line = ft_strchr(saved, '\n');
 	result = read_file(fd, &saved);
 	*line = saved;
 	return (result);
 }
 
-check for the newline
-if i have stuff after the newline i have to free it
+/*
+** check for the newline
+** if i have stuff after the newline i have to free it
+*/
