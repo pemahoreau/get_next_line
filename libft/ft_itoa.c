@@ -3,75 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kialvare <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/13 21:22:31 by kialvare          #+#    #+#             */
-/*   Updated: 2016/10/15 22:28:14 by kialvare         ###   ########.fr       */
+/*   Created: 2016/10/09 14:42:21 by phoreau           #+#    #+#             */
+/*   Updated: 2016/10/17 11:09:33 by phoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char				*num_str(int n, char *s, unsigned int i)
+static int		int_len(long n)
 {
-	unsigned int num;
+	int		index;
 
-	i--;
-	if (n < 0)
+	index = 0;
+	while (n != 0)
 	{
-		num = -n;
-		s[0] = '-';
+		n = n / 10;
+		index++;
 	}
-	else
-		num = n;
-	if (num >= 10)
-	{
-		num_str((num / 10), s, i);
-		s[i] = ((num % 10) + '0');
-	}
-	else
-		s[i] = (num + '0');
-	return (s);
+	return (index);
 }
 
-static unsigned int		num_len(int n)
+char			*ft_itoa(int n)
 {
-	unsigned int i;
-	unsigned int num;
+	size_t			len;
+	char			*str;
+	unsigned int	nb;
 
-	i = 0;
-	if (n < 0)
+	len = int_len(n);
+	nb = n;
+	if (n <= 0)
 	{
-		num = (unsigned int)-n;
-		i++;
+		nb = -n;
+		len++;
 	}
-	else
-		num = (unsigned int)n;
-	while (num > 0)
-	{
-		num = num / 10;
-		i++;
-	}
-	return (i);
-}
-
-char					*ft_itoa(int n)
-{
-	unsigned int	size;
-	char			*s;
-
-	size = num_len(n);
-	if (n == 0)
-	{
-		if (!(s = ft_strnew(1)))
-			return (NULL);
-		s[0] = '0';
-	}
-	else
-	{
-		if (!(s = ft_strnew(size)))
-			return (NULL);
-		s = num_str(n, s, size);
-	}
-	return (s);
+	if (!(str = ft_strnew(len)))
+		return (NULL);
+	if (nb == 0)
+		str[0] = '0';
+	str[--len] = nb % 10 + '0';
+	while (nb /= 10)
+		str[--len] = nb % 10 + '0';
+	if (n <= 0 && str[0] != '0')
+		str[0] = '-';
+	return (str);
 }

@@ -3,61 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kialvare <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/13 20:41:27 by kialvare          #+#    #+#             */
-/*   Updated: 2016/10/15 23:04:56 by kialvare         ###   ########.fr       */
+/*   Created: 2016/10/09 14:41:06 by phoreau           #+#    #+#             */
+/*   Updated: 2016/10/17 11:04:14 by phoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_wordcount(char const *s, char c)
+static char		*get_words(char const *str, char c, unsigned int *index)
 {
-	int prev;
-	int count;
+	unsigned int	i;
+	unsigned int	start;
+	unsigned int	end;
+	char			*word;
 
-	prev = 0;
-	count = 0;
-	while (*s)
+	i = *index;
+	while (str[i] == c)
+		i++;
+	start = i;
+	while (str[i] != c && str[i] != '\0')
+		i++;
+	end = i;
+	*index = i;
+	word = ft_strnew(end - start);
+	i = 0;
+	while (start < end)
 	{
-		if (prev == 1 && c == *s)
-			prev = 0;
-		if (prev == 0 && c != *s)
-		{
-			prev = 1;
-			count++;
-		}
-		s++;
+		word[i] = str[start];
+		start++;
+		i++;
 	}
-	return (count);
+	word[i] = '\0';
+	return (word);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(char const *str, char c)
 {
-	int		sholder;
-	char	**new_s;
-	int		i;
-	int		j;
-	int		begin;
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	words;
+	char			**array;
 
 	i = 0;
-	j = -1;
-	if (s == 0 || c == 0)
-		return (NULL);
-	sholder = ft_wordcount(s, c);
-	if (!(new_s = malloc((sizeof(char*) * (sholder + 1)))))
-		return (NULL);
-	while (++j < sholder)
+	words = 0;
+	while (str[i] != '\0')
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		begin = i;
-		while (s[i] && s[i] != c)
-			i++;
-		new_s[j] = malloc(sizeof(char*) * ((i - begin) + 1));
-		new_s[j] = ft_strsub(s, begin, i - begin);
+		if (str[i] != c && (str[i + 1] == c || str[i + 1] == '\0'))
+			words++;
+		i++;
 	}
-	new_s[j] = NULL;
-	return (new_s);
+	i = 0;
+	j = 0;
+	array = (char**)malloc(sizeof(char*) * (words + 1));
+	if (!array)
+		return (NULL);
+	while (i < words)
+	{
+		array[i] = get_words(str, c, &j);
+		i++;
+	}
+	array[i] = 0;
+	return (array);
 }

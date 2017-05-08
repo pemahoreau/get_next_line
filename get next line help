@@ -1,5 +1,10 @@
 get next line help
 
+recuperer une ligne en prenant en compte un file descriptor
+
 lire le buff par 10 20 ou 100 etc
 une fois qu'on a trouvé un newline, stocker la premiere ligne
 continuer jusqu'a ce qu'on ait trouvé la derniere ligne et fermer le fichier
+
+
+utiliser strdup, strsub et strchr?

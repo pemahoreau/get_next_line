@@ -6,7 +6,7 @@
 /*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/24 13:46:44 by phoreau           #+#    #+#             */
-/*   Updated: 2016/11/26 21:32:37 by kialvare         ###   ########.fr       */
+/*   Updated: 2016/10/18 21:16:40 by phoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef struct		s_list
 {
-	char			*content;
+	void			*content;
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
@@ -34,7 +34,7 @@ size_t				ft_strlen(const char *str);
 char				*ft_strdup(const char *src);
 char				*ft_strcpy(char *dest, char const *src);
 char				*ft_strncpy(char *dest, const char *src, size_t len);
-char				*ft_strcat(char *dest, const char *src);
+char				*ft_strcat(char const *s1, char const *s2);
 char				*ft_strncat(char *s1, const char *s2, size_t n);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 char				*ft_strchr(const char *s, int c);
@@ -82,6 +82,5 @@ void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lst_add_to_the_end(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-size_t				ft_lstcount(t_list *list);
 
 #endif

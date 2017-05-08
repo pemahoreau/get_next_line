@@ -3,41 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kialvare <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/12 12:21:54 by kialvare          #+#    #+#             */
-/*   Updated: 2016/10/15 23:19:23 by kialvare         ###   ########.fr       */
+/*   Created: 2016/10/09 09:11:06 by phoreau           #+#    #+#             */
+/*   Updated: 2016/10/17 11:10:28 by phoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_iswhitespace(int c)
+static int		is_blank(char c)
 {
-	return ((c == ' ') || (c == '\n') || (c == '\t'));
+	if (c == ' ' || c == '\n' || c == '\t')
+		return (1);
+	return (0);
 }
 
 char			*ft_strtrim(char const *s)
 {
-	char	*str;
-	size_t	i;
-	size_t	j;
-	size_t	len;
+	char	*tmp;
+	int		index;
+	int		len;
 
-	if (!s)
-		return (NULL);
-	i = 0;
-	j = ft_strlen(s);
-	while (ft_iswhitespace(s[j - 1]))
-		j--;
-	while (ft_iswhitespace(s[i]))
-		i++;
-	if (s[i] == '\0')
+	index = 0;
+	len = ft_strlen(s) - 1;
+	while (is_blank(s[index]))
+		index++;
+	while (is_blank(s[len]))
+		len--;
+	if (s[len] == '\0')
 	{
-		str = ft_strnew(0);
-		return (str);
+		tmp = ft_strnew(0);
+		return (tmp);
 	}
-	len = j - i;
-	str = ft_strsub(s, i, len);
-	return (str);
+	return (ft_strsub(s, index, len - index + 1));
 }

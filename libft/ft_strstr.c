@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kialvare <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/28 11:49:27 by kialvare          #+#    #+#             */
-/*   Updated: 2016/10/05 21:21:53 by kialvare         ###   ########.fr       */
+/*   Created: 2016/10/02 19:06:25 by phoreau           #+#    #+#             */
+/*   Updated: 2016/10/12 20:33:34 by phoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,22 @@
 
 char	*ft_strstr(const char *big, const char *little)
 {
-	char *str;
-	char *tofind;
+	size_t		i;
+	size_t		j;
 
-	if (!*little)
-		return ((char *)big);
-	while (*big)
+	i = 0;
+	if (big[i] == little[i] && big[i] == '\0')
+		return ((char*)&big[i]);
+	while (big[i] != '\0')
 	{
-		if (*big == *little)
+		j = i;
+		while (big[j] == little[j - i] && big[j] != '\0')
+			j++;
+		if (little[j - i] == '\0')
 		{
-			str = (char *)big;
-			tofind = (char *)little;
-			while (*str && *tofind && *str == *tofind)
-			{
-				str++;
-				tofind++;
-			}
-			if (!*tofind)
-				return ((char *)big);
+			return ((char*)&big[i]);
 		}
-		big++;
+		i++;
 	}
-	return (0);
+	return (NULL);
 }

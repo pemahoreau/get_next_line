@@ -12,36 +12,67 @@
 
 #include "get_next_line.h"
 
-// static int		each_line()
+// static int		read_file(const int fd, char **line)
 // {
-// 	int		*tmp;
+// 	int		result;
+// 	char	buf[BUFF_SIZE + 1];
+// 	char	*tmp;
+// 	char	*saved = NULL;
 
-// 	tmp = ;
+// 	if (!saved)
+// 		saved = malloc(sizeof(*saved) * (BUFF_SIZE));
+// 	while ((result = read(fd, buf, BUFF_SIZE)))
+// 	{
+// 		if (!line || fd < 0 || read(fd, buf, 0) < 0)
+// 			return (-1);
+// 		buf[result] = '\0';
+// 		tmp = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(saved) + 1));
+// 		ft_strcpy(tmp, saved);
+// 		ft_strcat(tmp, buf);
+// 		free(saved);
+// 		saved = tmp;
+// 	}
 // 	return (0);
 // }
 
-int				get_next_line(const int fd, char **line)
+static int		read_file(const int fd, char **line)
 {
-	char			buf[BUFF_SIZE + 1];
-	int				nbr_read;
-	static char		*saved;
+	int		result;
+	char	buf[BUFF_SIZE + 1];
+	char	*tmp;
+	char	*saved = NULL;
 
-	while ((nbr_read = read(fd, buf, BUFF_SIZE)))
+	if (!saved)
+		saved = malloc(sizeof(*saved) * (BUFF_SIZE));
+	while ((result = read(fd, buf, BUFF_SIZE)))
 	{
 		if (!line || fd < 0 || read(fd, buf, 0) < 0)
-			return (0);
-		buf[nbr_read] = '\0';
+			return (-1);
+		buf[result] = '\0';
+		tmp = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(saved) + 1));
+		ft_strcpy(tmp, saved);
+		ft_strcat(tmp, buf);
+		free(saved);
+		saved = tmp;
 	}
+	free(buf);
+	return (result);
 }
 
+int				get_next_line(const int fd, char **line)
+{
+	int 			result;
+	static char		*saved = NULL;
+	char			*end_of_line;
 
+	if (saved == NULL || fd < 0)
+		return (-1);
+	end_of_line = ft_strchr(saved, '\n');
+	while (end_of_line == NULL)
+	{
+		result = read_file(fd, &saved);
 
-// while ((nbr_read = read(fd, buf, 20)) > 0)
-// {
-// 	buf[nbr_read] = '\0';
-// 	tmp = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(result) + 1));
-// 	ft_strcpy(tmp, result);
-// 	ft_strcat(tmp, buf);
-// 	free(result);
-// 	result = tmp;
-// }
+	}
+	*line = NULL;
+	return (1);
+}

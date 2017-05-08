@@ -3,58 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kialvare <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/26 18:08:46 by kialvare          #+#    #+#             */
-/*   Updated: 2016/10/18 17:08:32 by kialvare         ###   ########.fr       */
+/*   Created: 2016/09/24 21:48:47 by phoreau           #+#    #+#             */
+/*   Updated: 2016/10/17 11:10:57 by phoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_checkwhitespace(const char *str, int i)
+int		ft_atoi(const char *str)
 {
-	if ((str[i]) == ' ' || (str[i]) == '\t' || (str[i]) == '\n' ||
-		(str[i]) == '\v' || (str[i]) == '\r' || (str[i]) == '\f')
-		return (1);
-	else
-		return (0);
-}
+	int		index;
+	int		nbr;
+	int		neg;
 
-static int	ft_checksign(const char *str, int i)
-{
-	if ((str[i]) == '-' || (str[i]) == '+')
+	index = 0;
+	nbr = 0;
+	neg = 0;
+	while (str[index] == ' ' || str[index] == '\t' || str[index] == '\n' ||
+		str[index] == '\v' || str[index] == '\f' || str[index] == '\r')
+		index++;
+	if (str[index] == '-')
+		neg = 1;
+	if (str[index] == '+' || str[index] == '-')
+		index++;
+	while (str[index] && (str[index] >= '0') && (str[index] <= '9'))
 	{
-		i++;
-		if (!(((str[i]) >= '0') && ((str[i]) <= '9')))
-			return (0);
+		nbr *= 10;
+		nbr += (str[index] - 48);
+		index++;
 	}
-	return (i);
-}
-
-int			ft_atoi(const char *str)
-{
-	int a;
-	int i;
-	int j;
-
-	a = 0;
-	i = 0;
-	j = 1;
-	while (ft_checkwhitespace(str, i) == 1)
-		i++;
-	i = ft_checksign(str, i);
-	while ((str[i]) != '\0')
-	{
-		if ((str[i - 1]) == '-')
-			j = -1;
-		if (((str[i]) >= '0') && ((str[i]) <= '9'))
-		{
-			a = a * 10 + str[i] - '0';
-			i++;
-		}
-		else
-			return (j * a);
-	}
-	return (j * a);
+	if (neg == 1)
+		return (-nbr);
+	return (nbr);
 }

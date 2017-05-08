@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memccpy.c                                          :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kialvare <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/28 12:50:11 by kialvare          #+#    #+#             */
-/*   Updated: 2016/09/28 13:54:32 by kialvare         ###   ########.fr       */
+/*   Created: 2016/10/03 20:14:28 by phoreau           #+#    #+#             */
+/*   Updated: 2016/10/12 20:09:39 by phoreau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,21 @@
 
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	while (n)
+	size_t				index;
+	unsigned char		*d;
+	unsigned char		*s;
+	unsigned char		ch;
+
+	index = 0;
+	d = (unsigned char*)dst;
+	s = (unsigned char*)src;
+	ch = (unsigned char)c;
+	while (index < n)
 	{
-		*((char*)dst) = *((char*)src);
-		dst = (void*)((char*)dst + 1);
-		src = (void*)((char*)src + 1);
-		if ((char)(c) == *((char*)dst - 1))
-			return (dst);
-		n--;
+		d[index] = s[index];
+		if (s[index] == ch)
+			return (&dst[index + 1]);
+		index++;
 	}
 	return (NULL);
 }
