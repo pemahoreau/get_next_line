@@ -37,37 +37,42 @@
 
 static int		read_file(const int fd, char **line)
 {
-	int		result;
+	int		return_of_read;
 	char	buf[BUFF_SIZE + 1];
 	char	*tmp;
 	char	*saved = NULL;
 
 	if (!saved)
-		saved = malloc(sizeof(*saved) * (BUFF_SIZE));
-	while ((result = read(fd, buf, BUFF_SIZE)))
+		saved = ft_strdup("");
+		// saved = malloc(sizeof(*saved) * (BUFF_SIZE));
+	while ((return_of_read = read(fd, buf, BUFF_SIZE)))
 	{
 		if (!line || fd < 0 || read(fd, buf, 0) < 0)
 			return (-1);
-		buf[result] = '\0';
+		buf[return_of_read] = '\0';
 		tmp = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(saved) + 1));
 		ft_strcpy(tmp, saved);
 		ft_strcat(tmp, buf);
 		free(saved);
 		saved = tmp;
+		*line = saved;
 	}
-	return (0);
+	return (return_of_read);
 }
 
 int				get_next_line(const int fd, char **line)
 {
 	int 			result;
-	static char		*saved;
-//	char			*end_of_line;
+	char		*saved = NULL;
+	// char			*end_of_line;
 
-	if (saved == NULL || fd < 0)
+	if (fd < 0)
 		return (-1);
-	//end_of_line = ft_strchr(saved, '\n');
+	// end_of_line = ft_strchr(saved, '\n');
 	result = read_file(fd, &saved);
 	*line = saved;
-	return (1);
+	return (result);
 }
+
+check for the newline
+if i have stuff after the newline i have to free it
