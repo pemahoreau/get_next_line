@@ -14,8 +14,8 @@
 
 int		main(int ac, char **av)
 {
-	char			*line;
-	int				fd;
+	char	*line;
+	int		fd;
 
 	fd = 0;
 	if (ac == 1)
@@ -28,9 +28,13 @@ int		main(int ac, char **av)
 	}
 	else if (ac == 2)
 	{
+			ft_putendl("yo");
+
 		fd = open(av[1], O_RDONLY);
 		while (get_next_line(fd, &line) > 0)
 		{
+				ft_putendl("ya");
+
 			ft_putendl(line);
 			line = NULL;
 		}
