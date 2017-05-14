@@ -28,18 +28,10 @@ int		main(int ac, char **av)
 	}
 	else if (ac == 2)
 	{
-			ft_putendl("yo");
-
 		fd = open(av[1], O_RDONLY);
 		while (get_next_line(fd, &line) > 0)
 		{
-<<<<<<< HEAD
-				ft_putendl("ya");
-
-			ft_putendl(line);
-=======
 			ft_putendl("YOLOOOO");
->>>>>>> c081b55b6626a84c309505d00a5ad7b871f0c43a
 			line = NULL;
 		}
 		ft_putendl(line);
