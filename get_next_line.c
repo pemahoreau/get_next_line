@@ -24,20 +24,17 @@ static int		read_line(const int fd, char **line)
 		saved = ft_strdup("");
 	//because malloc allows us to modify
 	//if the str is on the stack we can't modify it/it will have strange behavr
+	ft_bzero(buf, sizeof(char) * (BUFF_SIZE + 1));
 	while ((return_of_read = read(fd, buf, BUFF_SIZE)))
 	{
 		if (!line || fd < 0 || read(fd, buf, 0) < 0 || BUFF_SIZE <= 0)
 			return (-1);
-		if ((tmp = ft_strchr(saved, '\n')))
-		{
-			buf[return_of_read] = '\0';
-			tmp = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(saved) + 1));
-			ft_strcpy(tmp, saved);
-			ft_strcat(tmp, buf);
-			free(saved);
-			saved = tmp;
-			*line = saved;
-		}
+		tmp = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(saved) + 1));
+		ft_strcpy(tmp, saved);
+		ft_strcat(tmp, buf);
+		free(saved);
+		saved = tmp;
+		*line = saved;
 	}
 	return (return_of_read);
 }
@@ -45,19 +42,11 @@ static int		read_line(const int fd, char **line)
 int				get_next_line(const int fd, char **line)
 {
 	int			return_of_gnl;
-	char		*end_of_line = NULL;
 	char		*saved = NULL;
 
 	return_of_gnl = 0;
-	if (fd < 0)
-		return (-1);
-	while (end_of_line == NULL)
-	{
-		if (return_of_gnl == -1)
-			return (-1);
-		if (read_line(fd, &saved))
-			return (1);
-	}
+	if (read_line(fd, &saved))
+		return (1);
 	*line = saved;
 	return (return_of_gnl);
 }
