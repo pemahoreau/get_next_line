@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/22 20:40:32 by phoreau           #+#    #+#             */
-/*   Updated: 2017/04/22 20:40:40 by phoreau          ###   ########.fr       */
+/*   Created: 2014/11/21 13:14:15 by tfleming          #+#    #+#             */
+/*   Updated: 2014/11/21 13:15:30 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+#include "libft.h"
 
-# define BUFF_SIZE 42
-
-int		get_next_line(const int fd, char **line);
-
-#endif
+int				ft_abs(int num)
+{
+	return (num < 0 ? -num : num);
+}

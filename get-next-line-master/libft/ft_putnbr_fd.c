@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phoreau <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: tfleming <tfleming@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/22 20:40:32 by phoreau           #+#    #+#             */
-/*   Updated: 2017/04/22 20:40:40 by phoreau          ###   ########.fr       */
+/*   Created: 2014/11/08 12:16:36 by tfleming          #+#    #+#             */
+/*   Updated: 2014/11/08 19:28:40 by tfleming         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include "libft/libft.h"
+#include "libft.h"
 
-# define BUFF_SIZE 42
+void			ft_putnbr_fd(int number, int file_descriptor)
+{
+	char	*string;
 
-int		get_next_line(const int fd, char **line);
-
-#endif
+	string = ft_itoa(number);
+	ft_putstr_fd(string, file_descriptor);
+	free(string);
+}
