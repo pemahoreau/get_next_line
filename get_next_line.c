@@ -15,15 +15,15 @@
 
 static int		read_line(const int fd, char **line)
 {
-	int		ret_of_read;
-	char	buf[BUFF_SIZE + 1];
-	char	*tmp;
-	char	*saved = NULL;
+	int			ret_of_read;
+	char		buf[BUFF_SIZE + 1];
+	char		*tmp;
+	static char	*saved;
 
 	//because malloc allows us to modify
 	//if the str is on the stack we can't modify it/it will have strange behavr
 	if (!saved)
-		saved = ft_strdup("");
+		tmp = ft_strdup("");
 	ft_bzero(buf, BUFF_SIZE + 1);
 	while (!(ft_strchr(buf, '\n')) && (ret_of_read = read(fd, buf, BUFF_SIZE)) > 0)
 	{
@@ -32,11 +32,10 @@ static int		read_line(const int fd, char **line)
 		// tmp = malloc(sizeof(char) * (ft_strlen(buf) + ft_strlen(saved) + 1));
 		// ft_strcpy(tmp, saved);
 		// ft_strcat(tmp, buf);
-		tmp = ft_strjoin(buf, saved);
-		free(saved);
-		saved = tmp;
-		*line = saved;
+		tmp = ft_strjoin(tmp, buf);
 	}
+	*line = ft_strsub(tmp, 0, (ft_strchr(tmp, '\n') - tmp));
+	saved = ft_strsub(tmp, (ft_strchr(tmp, '\n') - tmp + 1), ft_strlen(tmp));
 	return (ret_of_read);
 }
 
@@ -48,13 +47,8 @@ int				get_next_line(const int fd, char **line)
 		return (-1);
 	if (read_line(fd, line))
 	{
-		*line = saved;
+		saved = *line;
 		return (1);
 	}
 	return (0);
 }
-
-/*
-** check for the newline
-** if i have stuff after the newline i have to free it
-*/
