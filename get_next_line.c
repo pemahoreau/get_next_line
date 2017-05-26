@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 static int	get_line(char **line, char **saved)
 {
@@ -29,6 +28,13 @@ static int	get_line(char **line, char **saved)
 		return (1);
 	}
 	return (0);
+}
+
+static int	get_line_extra_after_last_new_line(char **line, char **saved)
+{
+	*line = ft_strdup(*saved);
+	ft_strdel(saved);
+	return (1);
 }
 
 int			get_next_line(const int fd, char **line)
@@ -56,10 +62,6 @@ int			get_next_line(const int fd, char **line)
 			return (1);
 	}
 	if (*saved)
-	{
-		*line = ft_strdup(saved);
-		ft_strdel(&saved);
-		return (1);
-	}
+		return (get_line_extra_after_last_new_line(line, &saved));
 	return (0);
 }
